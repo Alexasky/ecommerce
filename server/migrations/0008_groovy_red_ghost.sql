@@ -1,0 +1,1 @@
+ALTER TABLE "twoFactorTokens" RENAME TO "twoFactorToken";

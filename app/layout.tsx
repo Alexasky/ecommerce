@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {  Poppins } from "next/font/google";
 import "./globals.css";
+import { Navigation } from '@/entities/navigation/ui';
+import { ThemeProvider } from '@/entities/providers/themeProvider';
+import { Toaster } from '@/components/ui/toaster';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const popins = Poppins({
+  variable: "--font-popins",
   subsets: ["latin"],
+  weight: "400",
+  style: "normal",
+  display: "swap", 
 });
 
 export const metadata: Metadata = {
@@ -23,11 +25,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${popins.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navigation />
+          <Toaster />
+          <main className='max-w-7xl mx-auto py-4 px-4'>
+            {children}
+          </main>          
+        </ThemeProvider>        
       </body>
     </html>
   );
