@@ -1,6 +1,6 @@
 'use client'
 
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { ToggleGroup, ToggleGroupItem } from '@/shared/components/ui/toggle-group'
 import Blockquote from '@tiptap/extension-blockquote'
 import BulletList from '@tiptap/extension-bullet-list'
 import Underline from '@tiptap/extension-underline'

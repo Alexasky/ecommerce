@@ -1,18 +1,24 @@
 'use client';
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/shared/components/ui/dialog';
 import { IProductVariant } from '../types/productVariant.interface';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { VariantFormValues, variantSchema } from '@/shared/lib/schemas/variantSchema';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form';
+import { Button } from '@/shared/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
 import { InputTags } from './inputTags';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { PlusCircle } from 'lucide-react';
+import { VariantImages } from './variantImages';
+import { useAction } from 'next-safe-action/hooks';
+import { createVariant } from '@/server/actions/createVariant';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-export const ProductVariant = ({editMode, productID, variant }: IProductVariant) => {
+export const ProductVariant = ({editMode, productID, variant, children }: IProductVariant) => {
+	const [open, setOpen] = useState(false);
+	const router = useRouter();
 	const form = useForm<VariantFormValues>({
 		resolver: zodResolver(variantSchema),
 		defaultValues: {
@@ -27,28 +33,59 @@ export const ProductVariant = ({editMode, productID, variant }: IProductVariant)
 		mode: 'onChange',
 	})
 
+	const setEdit = () => {
+		if (!editMode) {
+			form.reset();
+			return;
+		}
+		if (editMode && variant) {
+			form.reset({
+				tags: variant.variantTags.map(tag => tag.tag),
+				variantImages: variant.variantImages.map(image => ({
+					name: image.name,	
+					url: image.url,
+					size: image.size,
+				})),
+				color: variant.color,
+				productType: variant.productType,
+				id: variant.id,
+				productID,
+				editMode: true
+			});
+		}
+	}
+
+	useEffect(() => {
+		if (open) {			
+			setEdit();
+		}
+	}, [open]);
+
+	const { execute } = useAction(createVariant, {
+		onExecute() {
+			toast.loading('Creating variant...', {duration:500})
+		},
+		onSuccess(data) {
+			if( data.data?.error ) {
+				toast.error(data.data?.error);
+			}
+			if( data.data?.success ) {
+				toast.success(data.data?.success);
+				setOpen(false);
+				router.refresh();
+			}
+		},
+	})
+
 	function onSubmit(values: VariantFormValues) {
-		console.log(values)
+		execute(values);
 	}
 	return (
-		<Dialog>
-			{!editMode && (
-				<DialogTrigger asChild>
-				<Button variant="ghost" className="p-0 m-0">
-					<Tooltip>
-						<TooltipTrigger asChild>
-							<span>
-								<PlusCircle className="w-4 h-4 text-primary cursor-pointer" />
-							</span>
-						</TooltipTrigger>
-						<TooltipContent>
-							<p>Create a new variant</p>
-						</TooltipContent>
-					</Tooltip>
-				</Button>
+		<Dialog open={open} onOpenChange={setOpen}>
+			<DialogTrigger asChild>
+				{children }
 			</DialogTrigger>
-			)}
-			<DialogContent>
+			<DialogContent className='lg:max-w-screen-lg md:max-w-screen-md overflow-y-scroll max-h-[860px] rounded-md'>
 				<DialogHeader>
 					<DialogTitle>{editMode ? 'Edit' : 'Create'} your variant</DialogTitle>
 					<DialogDescription>
@@ -96,10 +133,13 @@ export const ProductVariant = ({editMode, productID, variant }: IProductVariant)
 								</FormItem>
 							)}
 						/>
-						{editMode && variant && (
-							<Button type='button' onClick={(e) => e.preventDefault()}>Delete</Button>
-						)}
-						<Button type="submit">{editMode ? 'Edit Variant' : 'Create Variant'}</Button>
+						<VariantImages />
+						<div className='flex justify-center items-center gap-4'>
+							{editMode && variant && (
+								<Button variant={'destructive'} type='button' onClick={(e) => e.preventDefault()}>Delete</Button>
+							)}
+							<Button type="submit">{editMode ? 'Edit Variant' : 'Create Variant'}</Button>
+						</div>
 					</form>
 				</Form>
 			</DialogContent>

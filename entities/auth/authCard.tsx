@@ -1,4 +1,4 @@
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import React from 'react'
 import { SocialButtons, BackButton } from './login/ui';
 

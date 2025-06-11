@@ -1,11 +1,11 @@
 'use client';
 import { useForm } from 'react-hook-form';
 import { productSchema, ProductFormValues } from '@/shared/lib/schemas';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
+import { Button } from '@/shared/components/ui/button';
 import { DollarSign } from 'lucide-react';
 import Tiptap from '../../tiptap/ui/tiptap';
 import { createProduct } from '@/server/actions/createProduct';

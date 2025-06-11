@@ -18,11 +18,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+} from "@/shared/components/ui/table"
+import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import { useState } from 'react'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
+import { Input } from '@/shared/components/ui/input'
+import { Button } from '@/shared/components/ui/button'
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 
 interface DataTableProps<TData, TValue> {

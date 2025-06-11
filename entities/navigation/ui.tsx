@@ -1,7 +1,7 @@
 import { auth } from '@/server/auth'
 import { Logo } from './logo';
 import { UserButton } from './userButton';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/shared/components/ui/button';
 import Link from 'next/link';
 
 export const Navigation = async() => {

@@ -1,13 +1,13 @@
 'use client';
 import { signOut } from 'next-auth/react';
 import { Session } from 'next-auth';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar';
 import { Suspense, useState } from 'react';
 import Image from 'next/image';
 import { LogOutIcon, MoonIcon, SettingsIcon, SunIcon, TruckIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { Switch } from '@/components/ui/switch';
+import { Switch } from '@/shared/components/ui/switch';
 import { useRouter } from 'next/navigation';
 
 export const UserButton = ({user}: Session) => {

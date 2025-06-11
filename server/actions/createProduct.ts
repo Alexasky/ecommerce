@@ -10,7 +10,7 @@ const actionClient = createSafeActionClient();
 
 export const createProduct = actionClient
 	.schema(productSchema)
-	.action(async({parsedInput: {id, title, description, price}}) => {
+	.action(async({ parsedInput: { id, title, description, price } }) => {
 		try {
 			if( !id ) {
 				const createdProduct = await db
@@ -18,9 +18,9 @@ export const createProduct = actionClient
 					.values({title, description, price})
 					.returning();
 					
-				return { success: `Product ${createdProduct[0].title} has been created`}
+				return { success: `Product ${createdProduct[0].title} has been created` };
 			}
-			const currentProduct = db.query.products.findFirst({
+			const currentProduct = await db.query.products.findFirst({
 				where: eq(products.id, id)
 			});
 
@@ -36,10 +36,11 @@ export const createProduct = actionClient
 				.where(eq(products.id, id))
 				.returning();				
 
-			return { success: `Product ${editedProduct[0].title} has been updated` }	
+			return { success: `Product ${editedProduct[0]?.title ?? title} has been updated` }
+	
 
-		} catch (error) {
-			console.log(JSON.stringify(error));
-			return { error: 'Failed to create product' }
+		} catch (error: unknown) {
+			console.error('Create/Update Product Error:', error);
+			return { error: 'Failed to create or update product' }
 		}
 	});

@@ -1,12 +1,12 @@
 'use client';
 
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form';
 import { AuthCard } from '../../authCard';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { LoginSchema, LoginFormValues } from '@/shared/lib/schemas/';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Input } from '@/shared/components/ui/input';
+import { Button } from '@/shared/components/ui/button';
 import Link from 'next/link';
 import { emailSignIn } from '@/server/actions/emailSignin';
 import { useAction } from 'next-safe-action/hooks';
@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { FormSuccess } from '../../formSuccess';
 import { FormError } from '../../formError';
-import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp';
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/shared/components/ui/input-otp';
 
 
 

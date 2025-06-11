@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { InputTagsProps } from '../types/inputTagsProps.type'
 import { useFormContext } from 'react-hook-form';
 import { cn } from '@/lib/utils';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/shared/components/ui/input';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Badge } from '@/components/ui/badge';
+import { Badge } from '@/shared/components/ui/badge';
 import { XIcon } from 'lucide-react';
 
 export const InputTags = ({ onChange, value, ...props}: InputTagsProps) => {

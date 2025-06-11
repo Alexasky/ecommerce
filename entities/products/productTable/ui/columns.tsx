@@ -1,24 +1,23 @@
 "use client"
 
-import { Button } from '@/components/ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import { Button } from '@/shared/components/ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
 import { deleteProduct } from '@/server/actions/deleteProduct';
 import { VariantsWithImagesTags } from '@/shared/lib/inferTypes';
 import { ColumnDef, Row } from "@tanstack/react-table"
-import { MoreHorizontal } from 'lucide-react';
+import { MoreHorizontal, PlusCircle } from 'lucide-react';
 import { useAction } from 'next-safe-action/hooks';
 import Image from 'next/image';
 import Link from 'next/link';
 import { toast } from 'sonner';
 import { ProductVariant } from './productVariant';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/shared/components/ui/tooltip';
 
 export type ProductColumn = {
   id: number,
   title: string,
-	description: string,
 	price: number,
-	variants: VariantsWithImagesTags,
+	variants: VariantsWithImagesTags[],
 	image: string,
 }
 
@@ -59,40 +58,42 @@ export const columns: ColumnDef<ProductColumn>[] = [
     accessorKey: "variants",
     header: "Variants",
 		cell: ({row}) => {
+
 			const variants = row.getValue("variants") as VariantsWithImagesTags[];
 			return (
-				<div>
-					{variants.map((variant) => (
+				<div className='flex gap-2 items-center'>
+					{variants && variants.map((variant) => (
 						<div key={variant.id}>
 							<Tooltip>
-								<TooltipTrigger asChild />								
+								<TooltipTrigger asChild>
+								<ProductVariant editMode={true} productID={variant.productID} variant={variant} >
+									<div 
+										className='w-5 h-5 rounded-full'
+										key={variant.id}
+										style={{background: variant.color}}
+									/>
+								</ProductVariant>
+								</TooltipTrigger>
 								<TooltipContent>
-									<ProductVariant editMode={true} productID={variant.id} variant={variant}>
-										<div 
-											className='w-5 h-5 rounded-full'
-											key={variant.id}
-											style={{background: variant.color}}
-										/>
-									</ProductVariant>
+									<p>{ variant.productType }</p>
 								</TooltipContent>
 							</Tooltip>
 						</div>
 					))}
-					<ProductVariant editMode={false} productID={row.original.id} />
-						{/* <PlusCircle className='w-4 h-4 text-primary cursor-pointer'/> */}
-					{/* </ProductVariant> */}
-					{/* <Tooltip>
-						<TooltipTrigger asChild>
-							<span>
+					<Button variant="ghost" className="p-0 m-0">
+						<Tooltip>
+							<TooltipTrigger asChild>
 								<ProductVariant editMode={false} productID={row.original.id}>
-									<PlusCircle className='w-4 h-4 text-primary cursor-pointer'/>
+									<span>
+										<PlusCircle className="w-4 h-4 text-primary cursor-pointer" />
+									</span>
 								</ProductVariant>
-							</span>
-						</TooltipTrigger>
-						<TooltipContent>							
-							<p>Create a new variant</p>
-						</TooltipContent>
-					</Tooltip> */}
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>Create a new variant</p>
+							</TooltipContent>
+						</Tooltip>
+					</Button>		
 				</div>
 			)
 		}
