@@ -2,9 +2,16 @@
 import { variantSchema } from '@/shared/lib/schemas/variantSchema';
 import { createSafeActionClient } from 'next-safe-action';	
 import { db } from '..';
-import { productVariants, variantImages, variantTags } from '../schema';
+import { products, productVariants, variantImages, variantTags } from '../schema';
 import { eq} from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
+import algoliasearch from "algoliasearch";
+
+const client = algoliasearch(
+	process.env.NEXT_PUBLIC_ALGOLIA_ID!,
+	process.env.ALGOLIA_WRITE_API_KEY!
+);
+const algoliaIndex = client.initIndex('products');
 
 const actionClient = createSafeActionClient();
 export const createVariant = actionClient
@@ -23,6 +30,14 @@ export const createVariant = actionClient
 					variantID: id,
 					order: index,
 				})));
+
+				await algoliaIndex.partialUpdateObject({
+					objectID: editVariant[0].id,
+					productType: editVariant[0].productType,
+					id: editVariant[0].productID,
+					variantImages: newImages[0].url || '',
+				});
+
 				revalidatePath('/dashboard/products');
 				return { success: `Variant for product ${editVariant[0].productType} has been updated` };
 			}
@@ -32,6 +47,10 @@ export const createVariant = actionClient
 				color,
 				productID,
 			}).returning();
+
+			const product = await db.query.products.findFirst({
+				where: eq(products.id, productID),
+			});
 
 			await db.insert(variantTags).values(tags.map(tag => ({
 				tag,
@@ -43,7 +62,18 @@ export const createVariant = actionClient
 				name: image.name,
 				variantID: createdVariant[0].id,
 				order: index,
-			})));			
+			})));
+
+			if(product) {
+				await algoliaIndex.saveObject({
+					objectID: createdVariant[0].id,
+					productType: createdVariant[0].productType,
+					title: product.title,
+					price: product.price,
+					id: createdVariant[0].productID,
+					variantImages: newImages[0].url || '',
+				});
+			}			
 			revalidatePath('/dashboard/products');
 			return { success: `Variant for product ${createdVariant[0].productType} has been created` };
 		} catch (error) {

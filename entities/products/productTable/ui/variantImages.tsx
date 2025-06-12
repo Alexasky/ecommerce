@@ -30,7 +30,7 @@ export const VariantImages = () => {
 						<FormLabel>Images</FormLabel>
 						<FormControl>
 						<UploadDropzone
-							className="ut-allowed-content:text-secondary-foreground ut-label:text-primary ut-upload-icon:text-primary/50 ut-upload-icon:w-14 hover:bg-primary/10 transition-all  duration-500 ease-in-out ut-button:bg-primary/80 ut-button:p-2 p-4"
+							className=" min-h-[198px] ut-allowed-content:text-secondary-foreground ut-label:text-primary ut-upload-icon:text-primary/50 ut-upload-icon:w-14 hover:bg-primary/10 transition-all  duration-500 ease-in-out ut-button:bg-primary/80 ut-button:cursor-pointer ut-button:p-2 p-4"
 							onUploadError={(error) => {
 								setError('variantImages', { type: 'validate', message: error.message || 'Upload failed' });
 							}}
@@ -106,7 +106,7 @@ export const VariantImages = () => {
 								>
 									<TableCell>{index}</TableCell>
 									<TableCell>{field.name}</TableCell>
-									<TableCell>{(field.size/(1024*1024)).toFixed(2)}</TableCell>
+									<TableCell>{(field.size/(1024*1024)).toFixed(2)} MB</TableCell>
 									<TableCell>
 										<div className='flex items-center justify-center overflow-hidden h-[48px] w-[72px] rounded-md'>
 											{field.url 

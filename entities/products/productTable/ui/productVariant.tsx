@@ -15,6 +15,7 @@ import { createVariant } from '@/server/actions/createVariant';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { deleteVariant } from '@/server/actions/deleteVariant';
 
 export const ProductVariant = ({editMode, productID, variant, children }: IProductVariant) => {
 	const [open, setOpen] = useState(false);
@@ -61,7 +62,7 @@ export const ProductVariant = ({editMode, productID, variant, children }: IProdu
 		}
 	}, [open]);
 
-	const { execute } = useAction(createVariant, {
+	const { execute, status } = useAction(createVariant, {
 		onExecute() {
 			toast.loading('Creating variant...', {duration:500})
 		},
@@ -76,6 +77,22 @@ export const ProductVariant = ({editMode, productID, variant, children }: IProdu
 			}
 		},
 	})
+
+	const deleteAction = useAction(deleteVariant, {
+		onExecute() {
+			toast.loading('Deleting variant...', {duration:500})
+		},
+		onSuccess(data) {
+			if( data.data?.error ) {
+				toast.error(data.data?.error);
+			}
+			if( data.data?.success ) {
+				toast.success(data.data?.success);
+				setOpen(false);
+				router.refresh();
+			}
+		},
+	})	
 
 	function onSubmit(values: VariantFormValues) {
 		execute(values);
@@ -136,9 +153,19 @@ export const ProductVariant = ({editMode, productID, variant, children }: IProdu
 						<VariantImages />
 						<div className='flex justify-center items-center gap-4'>
 							{editMode && variant && (
-								<Button variant={'destructive'} type='button' onClick={(e) => e.preventDefault()}>Delete</Button>
+								<Button 
+									variant={'destructive'} 
+									type='button' 
+									onClick={(e) => {
+										e.preventDefault();
+										deleteAction.execute({ id: variant.id });
+									}}
+									disabled={status === 'executing'}
+								>
+									Delete
+								</Button>
 							)}
-							<Button type="submit">{editMode ? 'Edit Variant' : 'Create Variant'}</Button>
+							<Button type="submit" disabled={status === 'executing' || !form.formState.isDirty || !form.formState.isValid }>{editMode ? 'Edit Variant' : 'Create Variant'}</Button>
 						</div>
 					</form>
 				</Form>
