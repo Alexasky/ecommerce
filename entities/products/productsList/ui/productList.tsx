@@ -31,7 +31,7 @@ export const ProductList:FC<ProductListProps> = ({variants}) => {
 					<div className="flex justify-between items-center p-4">
 						<div>
 							<h2>{variant.product.title}</h2>
-							<p className="text-sm text-gray-500">{variant.productType}</p>
+							<p className="text-sm text-accent-foreground/70">{variant.productType}</p>
 						</div>
 						<Badge variant="secondary" className="text-sm">
 							{formatPrice(variant.product.price)}
