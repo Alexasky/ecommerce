@@ -16,19 +16,6 @@ export const UserButton = ({user}: Session) => {
 	const { setTheme, theme } = useTheme();
 	const [ checked, setChecked ] = useState( false );
 
-	// const setSwitchState = () => {
-	// 	switch ( theme ) {
-	// 		case 'dark':
-	// 			return setChecked(true);
-	// 		case 'light':
-	// 			return setChecked(false);
-	// 		case 'system':
-	// 			return setChecked(false);	
-	// 		default:
-	// 			return setChecked(false);
-	// 	}
-	// }
-
 	if ( user ) {
 		return (
 			<DropdownMenu modal={false}>
@@ -40,11 +27,11 @@ export const UserButton = ({user}: Session) => {
 							</div>
 						</AvatarFallback>
 					}>
-						<Avatar>
+						<Avatar >
 							{user.image && user.name ? (
-								<AvatarImage src={user.image} alt={user.name} className='bg-primary/25 cursor-pointer'/>
+								<AvatarImage src={user.image} alt={user.name} className='bg-primary/25 cursor-pointer object-cover h-full w-full'/>
 							) : (
-								<AvatarFallback className='bg-primary/25 cursor-pointer'>
+								<AvatarFallback className='bg-primary/25 cursor-pointer object-cover h-full w-full'>
 									<div className="font-bold">
 										{user.name?.charAt(0).toUpperCase()}
 									</div>

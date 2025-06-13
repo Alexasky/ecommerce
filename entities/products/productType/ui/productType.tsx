@@ -17,7 +17,7 @@ export const ProductType:FC<ProductTypeProps> = ({variants}) => {
 				return (
 					<motion.div
 						key={variant.id}
-						className='text-secondary-foreground font-medium'
+						className='text-secondary-foreground/80 font-medium text-sm'
 						initial={{ opacity: 0, y: 6 }}
 						animate={{ opacity: 1, y: 0 }}
 					>

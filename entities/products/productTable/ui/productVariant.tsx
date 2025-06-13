@@ -99,7 +99,7 @@ export const ProductVariant = ({editMode, productID, variant, children }: IProdu
 	}
 	return (
 		<Dialog open={open} onOpenChange={setOpen}>
-			<DialogTrigger asChild>
+			<DialogTrigger asChild >
 				{children }
 			</DialogTrigger>
 			<DialogContent className='lg:max-w-screen-lg md:max-w-screen-md overflow-y-scroll max-h-[860px] rounded-md'>

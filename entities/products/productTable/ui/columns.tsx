@@ -33,7 +33,7 @@ const ActionCell = ({row}: {row: Row<ProductColumn>}) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Button variant={"ghost"} className='cursor-pointer w-8 h-8 p-0'><MoreHorizontal className='w-4 h-4'/></Button>
+				<Button aria-label="Select action" variant={"ghost"} className='cursor-pointer w-8 h-8 p-0'><MoreHorizontal className='w-4 h-4'/></Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuItem className='cursor-pointer dark:focus:bg-primary focus:bg-primary/50'>
@@ -66,11 +66,13 @@ export const columns: ColumnDef<ProductColumn>[] = [
 						<div key={variant.id}>
 							<Tooltip>
 								<TooltipTrigger asChild>
-								<ProductVariant editMode={true} productID={variant.productID} variant={variant} >
+								<ProductVariant editMode={true} productID={variant.productID} variant={variant}>
 									<div 
-										className='w-5 h-5 rounded-full'
+										role="button"
+										className='w-5 h-5 rounded-full cursor-pointer'
 										key={variant.id}
 										style={{background: variant.color}}
+										aria-label='Select variant'
 									/>
 								</ProductVariant>
 								</TooltipTrigger>
@@ -84,7 +86,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
 						<Tooltip>
 							<TooltipTrigger asChild>
 								<ProductVariant editMode={false} productID={row.original.id}>
-									<span>
+									<span role="button" aria-label='Add new variant'>
 										<PlusCircle className="w-4 h-4 text-primary cursor-pointer" />
 									</span>
 								</ProductVariant>

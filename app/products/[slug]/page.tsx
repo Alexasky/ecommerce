@@ -1,8 +1,10 @@
 import { ProductPick } from '@/entities/products/productPick';
+import { ProductShowcase } from '@/entities/products/productShowcase';
 import { ProductType } from '@/entities/products/productType';
 import { db } from '@/server';
 import { productVariants } from '@/server/schema';
 import { Separator } from '@/shared/components/ui/separator';
+import { formatPrice } from '@/shared/lib/formatPrice';
 import { eq } from 'drizzle-orm';
 
 export async function generateStaticParams() {
@@ -40,16 +42,21 @@ export default async function ProductPage({params}: {params: {slug: string}}) {
 		},
 	});
 	return (
-		<section>
+		<section className='flex flex-col lg:flex-row gap-4 lg:gap-12'>
 			<div className='flex flex-1'>
-				Images
+				<ProductShowcase
+					variants={variant?.product.productVariants || []}
+				/>
 			</div>
-			<div className='flex flex-1 flex-col gap-2'>
-				<h2>{variant?.product.title}</h2>
+			<div className='flex flex-1 flex-col'>
+				<h2 className='text-2xl font-bold'>{variant?.product.title}</h2>
 				<ProductType variants={variant?.product.productVariants || []} />
-				<Separator/>
-				<p className='text-2xl font-medium'>formatPrice({variant?.product.price})</p>
+				<Separator className='my-4'/>
+				<p className='text-2xl font-medium'>{formatPrice(Number(variant?.product.price))}</p>
 				<div dangerouslySetInnerHTML={{__html: variant?.product.description || ''}	}/>
+				<p className=' text-accent-foreground/70 font-medium my-2'>
+					Available	colors
+				</p>
 				<div className='flex gap-2'>
 					{variant && variant.product.productVariants.map((variantItem) => (
 						<ProductPick 
