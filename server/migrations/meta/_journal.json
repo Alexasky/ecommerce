@@ -85,6 +85,13 @@
       "when": 1749122170692,
       "tag": "0011_smooth_cassandra_nova",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1750143057371,
+      "tag": "0012_thick_argent",
+      "breakpoints": true
     }
   ]
 }

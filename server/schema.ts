@@ -1,4 +1,5 @@
 import { relations } from 'drizzle-orm';
+import { index } from 'drizzle-orm/pg-core';
 import {
   boolean,
   timestamp,
@@ -174,7 +175,8 @@ export const variantTags = pgTable("variantTags", {
 })
 
 export const productRelation = relations(products, ({many}) => ({
-  productVariants: many(productVariants, {relationName: "productVariants"})
+  productVariants: many(productVariants, {relationName: "productVariants"}),
+  reviews: many(reviews, {relationName: "reviews"}),
   })
 )
 
@@ -204,4 +206,40 @@ export const variantTagsRelation = relations(variantTags, ({one}) => ({
     references:[productVariants.id],
     relationName: "variantTags"
   })
+}))
+
+export const reviews = pgTable("reviews", {
+  id: serial("id").primaryKey(),
+  rating: serial("rating").notNull(),
+  userID: text("userID")
+    .notNull()
+    .references(() => users.id, {onDelete: 'cascade'}),
+  productID: serial("productID")
+    .notNull()
+    .references(() => products.id, {onDelete: 'cascade'}),
+  comment: text("comment").notNull(),
+  created: timestamp("created").defaultNow(),
+}, (table) => {
+  return [
+    index("productIDx").on(table.productID),
+    index("userIDx").on(table.userID)
+  ]
+});
+
+export const reviewRelation = relations(reviews, ({one}) => ({
+  user: one(users, {
+    fields: [reviews.userID],
+    references:[users.id],
+    relationName: "userReviews",
+  }),
+  product: one(products, {
+    fields: [reviews.productID],
+    references:[products.id],
+    relationName: "reviews",
+  }),  
+}))
+
+
+export const userRelation = relations(users,({many}) => ({
+  reviews: many(reviews, {relationName:"userReviews"}),
 }))

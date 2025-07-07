@@ -45,7 +45,7 @@ export const UserButton = ({user}: Session) => {
 						<div className='flex justify-center items-center flex-col px-4 py-4 bg-primary/10 rounded-lg'>
 							{user.image && user.name && 
 								<>
-									<Image width={36} height={36} src={user.image} alt={user.name} className='rounded-full mb-2' />									
+									<Image width={36} height={36} src={user.image} alt={user.name} className='rounded-full object-cover mb-2 h-[36px]' />									
 								</>
 							}
 							{user.name &&

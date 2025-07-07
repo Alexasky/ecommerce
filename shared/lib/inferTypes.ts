@@ -36,3 +36,8 @@ export type VariantsWithProduct = InferResultType<"productVariants", {
 export type ProductsWithVariants = InferResultType<"products", {
 	productVariants: true
 }>;
+
+export type ReviewWithUser = InferResultType<"reviews", {
+  user: true,
+}>;
+
