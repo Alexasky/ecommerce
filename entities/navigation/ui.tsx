@@ -3,6 +3,7 @@ import { Logo } from './logo';
 import { UserButton } from './userButton';
 import { Button } from '@/shared/components/ui/button';
 import Link from 'next/link';
+import { CartDrawer } from '@/features/cart/ui/CartDrawer';
 
 export const Navigation = async() => {
 	const session =  await auth();
@@ -10,11 +11,13 @@ export const Navigation = async() => {
 	return (
 		<header>
 			<nav className='max-w-7xl mx-auto py-4 px-4'>
-				<ul className='flex justify-between items-center'>
-					<li>
-						<Link aria-label='Logo' href={'/'}><Logo /></Link></li>
+				<ul className='flex justify-between items-center gap-4'>
+					<li className='flex-1'>
+						<Link aria-label='Logo' href={'/'}><Logo /></Link>
+					</li>
+					<li className='cursor-pointer'><CartDrawer /></li>
 					{ session ? (
-						<li><UserButton expires={session?.expires} user={session?.user}/></li>
+						<li className='flex items-center'><UserButton expires={session?.expires} user={session?.user}/></li>
 						) : (
 							<li>
 								<Button asChild>
