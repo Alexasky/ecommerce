@@ -3,6 +3,7 @@ import { ProductShowcase } from '@/entities/products/productShowcase';
 import { ProductType } from '@/entities/products/productType';
 import { Reviews } from '@/entities/reviews';
 import { Stars } from '@/entities/reviews/ui/Stars';
+import { AddCart } from '@/features/cart/ui/AddCart';
 import { db } from '@/server';
 import { productVariants } from '@/server/schema';
 import { Separator } from '@/shared/components/ui/separator';
@@ -74,6 +75,7 @@ export default async function ProductPage({params}: {params: {slug: string}}) {
 								/>
 							))}
 						</div>
+						<AddCart />
 					</div>
 				</section>
 				<Reviews productID={variant.productID}/>

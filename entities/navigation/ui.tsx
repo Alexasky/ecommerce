@@ -15,7 +15,7 @@ export const Navigation = async() => {
 					<li className='flex-1'>
 						<Link aria-label='Logo' href={'/'}><Logo /></Link>
 					</li>
-					<li className='cursor-pointer'><CartDrawer /></li>
+					<li><CartDrawer /></li>
 					{ session ? (
 						<li className='flex items-center'><UserButton expires={session?.expires} user={session?.user}/></li>
 						) : (

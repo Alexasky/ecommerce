@@ -17,7 +17,7 @@ export const ProductList:FC<ProductListProps> = ({variants}) => {
 			{variants.map(variant  => (
 				<Link	
 					key={variant.id}
-					href={`products/${variant.id}?id=${variant.id}&productID=${variant.productID}&productType=${variant.productType}&color=${variant.color}&title=${variant.product.title}$price=${variant.product.price}`}
+					href={`products/${variant.id}?id=${variant.id}&productID=${variant.productID}&productType=${variant.productType}&title=${variant.product.title}&price=${variant.product.price}&image=${variant.variantImages[0].url}&color=${variant.color}`}
 					className="group relative block rounded-lg border hover:bg-gray-50 transition-colors"	
 				>
 					<Image
