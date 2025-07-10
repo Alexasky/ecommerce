@@ -6,8 +6,8 @@ import { ThemeProvider } from '@/entities/providers/themeProvider';
 import { Toaster } from '@/shared/components/ui/toaster';
 
 
-const popins = Poppins({
-  variable: "--font-popins",
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
   weight: "400",
   style: "normal",
@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${popins.variable} antialiased`}
+        className={`${poppins.variable} font-poppins antialiased `}
       >
         <ThemeProvider
           attribute="class"
@@ -37,7 +37,7 @@ export default function RootLayout({
         >
           <Navigation />
           <Toaster />
-          <main className='max-w-7xl mx-auto py-4 px-4'>
+          <main className='max-w-8xl mx-auto py-4 px-4'>
             {children}
           </main>          
         </ThemeProvider>        

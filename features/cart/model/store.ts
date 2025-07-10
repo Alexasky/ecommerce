@@ -1,10 +1,13 @@
 import { create } from "zustand";
 import { CartState } from './types';
+import { persist } from "zustand/middleware";
 
-export const useCartStore = create<CartState>((set) => ({
+export const useCartStore = create<CartState>()(
+	persist(
+	(set) => ({
 	cart: [],
-	addToCart: (item) => set((state) => {
-		const existingItem = state.cart.find(cartItem => cartItem.variant.variantID === item.variant.variantID);
+	addToCart: (item) => set((state) => {		
+		const existingItem = state.cart.find(cartItem => cartItem.variant.variantID === item.variant.variantID);		
 		if ( existingItem ) {
 			const updatedItem = state.cart.map(cartItem => {
 				if (cartItem.variant.variantID === item.variant.variantID) {
@@ -12,7 +15,7 @@ export const useCartStore = create<CartState>((set) => ({
 						...cartItem,
 						variant: {
 							...cartItem.variant,
-							quatity: cartItem.variant.quantity + item.variant.quantity
+							quantity: cartItem.variant.quantity + item.variant.quantity
 						}
 					}
 				}
@@ -33,5 +36,21 @@ export const useCartStore = create<CartState>((set) => ({
 				]
 			}
 		}
-	})
-}))
+	}),
+	removeFromCart: (item) => set((state) => {
+		const updatedCart = state.cart.map(cartItem => {	
+			if(cartItem.variant.variantID === item.variant.variantID) {
+				return {
+					...cartItem,
+					variant: {
+						...cartItem.variant,
+						quantity: cartItem.variant.quantity - 1
+					}
+				}
+			}
+			return cartItem;
+		});
+		return {cart: updatedCart.filter(cartItem => cartItem.variant.quantity > 0)};
+	}),
+}), {name: 'cart-storage'})
+)

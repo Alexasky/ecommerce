@@ -7,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-popins: var(--font-popins);
+  --font-poppins: var(--font-poppins);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -41,6 +41,8 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --max-width-8xl: var(--container-8xl);
+  --min-height-50vh: var(--min-height-50vh);
 }
 
 :root {
@@ -150,6 +152,8 @@
 }
 
 :root {
+  --container-8xl: 88rem;
+  --min-height-50vh: 50vh;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
@@ -223,11 +227,11 @@
   * {
     @apply border-border outline-ring/50;
   }
-
+/* 
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-popins);
-  }
+  } */
 }
 
 input[type="file"] {

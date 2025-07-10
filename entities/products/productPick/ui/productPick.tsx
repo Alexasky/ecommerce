@@ -16,7 +16,7 @@ export const ProductPick: FC<ProductPickProps> = ({variant}) => {
 			style={{backgroundColor: variant.color}}
 			onClick={() => {
 				router.push(
-					`${variant.id}?id=${variant.id}&productID=${variant.productID}&productType=${variant.productType}&color=${variant.color}&title=${variant.product.title}$price=${variant.product.price}`,
+					`${variant.id}?id=${variant.id}&productID=${variant.productID}&productType=${variant.productType}&title=${variant.product.title}&price=${variant.product.price}&image=${variant.variantImages[0].url}&color=${variant.color}`,
 					{scroll: false}
 				);
 			}}

@@ -10,7 +10,7 @@ export const Navigation = async() => {
 
 	return (
 		<header>
-			<nav className='max-w-7xl mx-auto py-4 px-4'>
+			<nav className='max-w-8xl mx-auto py-4 px-4'>
 				<ul className='flex justify-between items-center gap-4'>
 					<li className='flex-1'>
 						<Link aria-label='Logo' href={'/'}><Logo /></Link>

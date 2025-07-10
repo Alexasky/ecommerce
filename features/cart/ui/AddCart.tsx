@@ -20,8 +20,6 @@ export const AddCart = () => {
 	const type = params.get('productType');
 	const productID = Number(params.get('productID'));
 	const image = params.get('image');
-	console.log(params)
-	console.log("title: ", title , "price: ", price , "id: ", id ,"type: ", type ,"image: ", image ,"productID: ", productID)
 
 	if (!id || !productID || !price || !type || !image || !title ) {
 		toast.error('Product not found');

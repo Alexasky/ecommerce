@@ -4,6 +4,7 @@ import { ShoppingBag } from 'lucide-react';
 import { useCartStore } from '../model/store';
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer';
 import { AnimatePresence, motion} from 'framer-motion';
+import { CartItems } from './CartItems';
 
 export const CartDrawer = () => {
 	const { cart } = useCartStore();
@@ -24,10 +25,13 @@ export const CartDrawer = () => {
 					</AnimatePresence>
 				<ShoppingBag />
 				</DrawerTrigger>
-				<DrawerContent>
+				<DrawerContent className='min-h-50vh p-1 md:p-4'>
 					<DrawerHeader>
-						<DrawerTitle>Drawer stuff</DrawerTitle>
+						<DrawerTitle>Cart Progress</DrawerTitle>												
 					</DrawerHeader>
+					<div className='overflow-auto p-1 md:p-4'>
+						<CartItems/>
+					</div>
 				</DrawerContent>
 			</Drawer>		
 		);
