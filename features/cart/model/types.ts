@@ -13,6 +13,11 @@ export interface CartItem {
 
 export interface CartState {
 	cart: CartItem[];
+	checkoutProgress: 'cart-page' | 'payment-page' | 'confirmation-page';
+	amount: number;
+	setTotalAmount: (amount: number) => void;
+	setCheckoutProgress: (val: 'cart-page' | 'payment-page' | 'confirmation-page') => void;
 	addToCart: (item: CartItem) => void,
 	removeFromCart: (item: CartItem) => void;
+	clearCart: () => void;
 }

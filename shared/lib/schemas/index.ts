@@ -4,3 +4,7 @@ export * from './productSchema';
 export * from './registerSchema';
 export * from './resetSchema';
 export * from './settingsSchema';
+export * from './variantSchema';
+export * from './paymentIntentSchema';
+export * from './reviewSchema';
+export * from './orderSchema';

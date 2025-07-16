@@ -6,6 +6,11 @@ export const useCartStore = create<CartState>()(
 	persist(
 	(set) => ({
 	cart: [],
+	checkoutProgress: 'cart-page',
+	amount: 0,
+	setTotalAmount: (amount) => set(() => ({amount})),
+	clearCart: () => set(() => ({cart: []})),
+	setCheckoutProgress: (val) => set(() => ({checkoutProgress: val})),
 	addToCart: (item) => set((state) => {		
 		const existingItem = state.cart.find(cartItem => cartItem.variant.variantID === item.variant.variantID);		
 		if ( existingItem ) {

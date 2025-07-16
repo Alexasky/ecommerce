@@ -2,12 +2,15 @@
 
 import { ShoppingBag } from 'lucide-react';
 import { useCartStore } from '../model/store';
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/shared/components/ui/drawer';
+import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from '@/shared/components/ui/drawer';
 import { AnimatePresence, motion} from 'framer-motion';
 import { CartItems } from './CartItems';
+import { CartMessage } from './CartMessage';
+import { Payment } from './Payment';
+import { OrderConfirmed } from './OrderConfirmed';
 
 export const CartDrawer = () => {
-	const { cart } = useCartStore();
+	const { cart, checkoutProgress } = useCartStore();
     return(
 			<Drawer>
 				<DrawerTrigger className='relative p-2 cursor-pointer flex items-center'>
@@ -25,12 +28,14 @@ export const CartDrawer = () => {
 					</AnimatePresence>
 				<ShoppingBag />
 				</DrawerTrigger>
-				<DrawerContent className='min-h-50vh p-1 md:p-4'>
+				<DrawerContent className='min-h-70vh p-1 md:p-4'>
 					<DrawerHeader>
-						<DrawerTitle>Cart Progress</DrawerTitle>												
+						<CartMessage />									
 					</DrawerHeader>
 					<div className='overflow-auto p-1 md:p-4'>
-						<CartItems/>
+						{checkoutProgress === 'cart-page' && <CartItems/>}
+						{checkoutProgress === 'payment-page' && <Payment />}
+						{checkoutProgress === 'confirmation-page' && <OrderConfirmed />}
 					</div>
 				</DrawerContent>
 			</Drawer>		

@@ -42,7 +42,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --max-width-8xl: var(--container-8xl);
-  --min-height-50vh: var(--min-height-50vh);
+  --min-height-70vh: var(--min-height-70vh);
 }
 
 :root {
@@ -153,7 +153,7 @@
 
 :root {
   --container-8xl: 88rem;
-  --min-height-50vh: 50vh;
+  --min-height-70vh: 70vh;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.129 0.042 264.695);
