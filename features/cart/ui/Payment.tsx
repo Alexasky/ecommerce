@@ -10,12 +10,13 @@ const stripe = getStripe();
 
 export const Payment = () => {
 	const { amount } = useCartStore();
+	console.log('Payment component rendered with amount:', amount);
 	return (
 		<motion.div>
 			<Elements stripe={stripe} options={{
 				mode: 'payment',
 				currency: 'usd',
-				amount: amount * 100,
+				amount: Math.round(amount * 100),
 			}}>
 				<PaymentForm />
 			</Elements>

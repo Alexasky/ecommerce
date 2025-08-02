@@ -20,7 +20,7 @@ export const createPaymentIntent = actionClient
 			}
 
 			const paymentIntent = await stripe.paymentIntents.create({
-				amount: amount * 100,
+				amount: Math.round(amount * 100),
 				currency,
 				automatic_payment_methods: {
 					enabled: true
@@ -29,11 +29,13 @@ export const createPaymentIntent = actionClient
 					orderID
 				},
 			})
-			return { success: {
-				clientSecretID: paymentIntent.client_secret,
-				paymentIntentID: paymentIntent.id,
-				user: user.user.email,
-			} };
+			return { 
+				success: {
+					clientSecretID: paymentIntent.client_secret,
+					paymentIntentID: paymentIntent.id,
+					user: user.user.email,
+				} 
+			};
 		} catch (error: unknown) {
 			console.error('Payment Intent Creation Error:', error);
 			return { error: 'Failed to create payment intent' };

@@ -9,7 +9,7 @@ import { useCartStore } from '../model/store';
 
 
 export const OrderConfirmed = () => {
-	const { setCheckoutProgress } = useCartStore();
+	const { setCheckoutProgress, setCartOpened } = useCartStore();
 	return (
 		<motion.div
 			initial={{ opacity: 0, y: 20 }}
@@ -18,7 +18,14 @@ export const OrderConfirmed = () => {
 			className="flex flex-col items-center justify-center h-full"
 		>
 			<Link href='/dashboard/orders'>
-				<Button onClick={() => setCheckoutProgress('cart-page')}>View your order</Button>
+				<Button 
+					onClick={() => {
+						setCheckoutProgress('cart-page')
+						setCartOpened(false);
+					}}
+				>
+					View your order
+				</Button>
 			</Link>
 			<Lottie animationData={PaymentSuccessfulAnimation} loop={true} className="w-64 h-64" />
 		</motion.div>

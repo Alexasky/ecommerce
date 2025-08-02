@@ -8,6 +8,8 @@ export const useCartStore = create<CartState>()(
 	cart: [],
 	checkoutProgress: 'cart-page',
 	amount: 0,
+	cartOpened: false,
+	setCartOpened: (val) => set(() => ({cartOpened: val})),
 	setTotalAmount: (amount) => set(() => ({amount})),
 	clearCart: () => set(() => ({cart: []})),
 	setCheckoutProgress: (val) => set(() => ({checkoutProgress: val})),

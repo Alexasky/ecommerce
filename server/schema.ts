@@ -138,7 +138,7 @@ export const authenticators = pgTable(
   ]
 )
 
-export const products = pgTable("product", {
+export const products = pgTable("products", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description").notNull(),
@@ -255,6 +255,7 @@ export const orders = pgTable("orders", {
   status: text("status").notNull(),
   created: timestamp("created").defaultNow(),
   receiptURL: text("receiptURL"),
+  paymentIntentID: text("paymentIntentID"),
 })
 
 export const ordersRalations = relations(orders, ({one, many}) => ({
@@ -268,10 +269,9 @@ export const ordersRalations = relations(orders, ({one, many}) => ({
 
 export const  orderProduct = pgTable("orderProduct", {
   id: serial("id").primaryKey(),
-  userID: text("userID").notNull().references(() => users.id, { onDelete: "cascade"}),
   quantity: integer("quantity").notNull(),
-  productID: serial("productId").references(() => products.id, { onDelete: "cascade"}),
-  productVariantID: serial("productVariantId").notNull().references(() => productVariants.id, { onDelete: "cascade"}),
+  productID: serial("productID").references(() => products.id, { onDelete: "cascade"}),
+  productVariantID: serial("productVariantID").notNull().references(() => productVariants.id, { onDelete: "cascade"}),
   orderID: serial("orderID").notNull().references(() => orders.id, { onDelete: "cascade"}),
 })
 
@@ -286,7 +286,7 @@ export const orderProductRelations = relations(orderProduct, ({one}) => ({
     references: [products.id],
     relationName: "products"
   }),
-  productVariant: one(productVariants,{
+  productVariants: one(productVariants,{
     fields: [orderProduct.productVariantID],
     references: [productVariants.id],
     relationName: "productVariants"

@@ -15,6 +15,7 @@ export const UserButton = ({user}: Session) => {
 
 	const { setTheme, theme } = useTheme();
 	const [ checked, setChecked ] = useState( false );
+	if ( !user ) return null;
 
 	if ( user ) {
 		return (
