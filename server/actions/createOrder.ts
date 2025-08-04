@@ -7,19 +7,19 @@ import { auth } from '../auth';
 const actionClient = createSafeActionClient();
 export const createOrder = actionClient
 	.schema(orderSchema)
-	.action(async ({ parsedInput: { total, status, products } }) => {
+	.action(async ({ parsedInput: { total, status, products, paymentIntentID } }) => {
 		try {
 			const user = await auth();
 			if (!user) {
 				return { error: 'Please login to continue' };
 			}
-
 			const newOrder = await db
 				.insert(orders)
 				.values({
 					total,
 					status,
 					userID: user.user.id,
+					paymentIntentID,
 				})
 				.returning();
 

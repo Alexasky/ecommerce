@@ -8,7 +8,6 @@ import { useAction } from 'next-safe-action/hooks';
 import { createOrder } from '@/server/actions/createOrder';
 import { toast } from 'sonner';
 
-
 export const PaymentForm = () => {
 	const { amount, cart, setCheckoutProgress, clearCart } = useCartStore();
 	const stripe = useStripe();
@@ -58,6 +57,7 @@ export const PaymentForm = () => {
 			orderID: crypto.randomUUID(),
 		});
 
+		
 		if (result?.data?.error) {
 			setIsLoading(false);
 			setErrorMessage(result?.data?.error);
@@ -83,6 +83,7 @@ export const PaymentForm = () => {
 				execute({
 					total: amount,
 					status: 'pending',
+					paymentIntentID: result.data.success.paymentIntentID,
 					products: cart.map(item => ({
 						quantity: item.variant.quantity,
 						productID: item.id,
@@ -96,6 +97,7 @@ export const PaymentForm = () => {
 		<form onSubmit={handleSubmit} className='xl:max-w-xl w-full flex flex-col gap-4 justify-center m-auto'>
 			<PaymentElement />
 			<AddressElement options={{mode: 'shipping'}} />
+			{errorMessage && <div className='text-destructive/25 text-sm'>{errorMessage}</div>}
 			<Button className='w-full my-4 self-center' type="submit" disabled={!stripe || !elements || isLoading }><span>{isLoading ? 'Processing ...' : 'Pay now'}</span></Button>
 		</form>
 	)
