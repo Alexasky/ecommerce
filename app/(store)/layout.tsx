@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import {  Poppins } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import { Navigation } from '@/entities/navigation/ui';
 import { ThemeProvider } from '@/entities/providers/themeProvider';
 import { Toaster } from '@/shared/components/ui/toaster';
+import { Footer } from '@/entities/footer/ui';
 
 
 const poppins = Poppins({
@@ -27,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${poppins.variable} font-poppins antialiased`}
+        className={`${poppins.variable} font-poppins antialiased flex min-h-screen flex-col w-full bg-gradient-to-b from-slate-50 to-white`}
       >
         <ThemeProvider
           attribute="class"
@@ -35,12 +36,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navigation />
+          <Navigation isHome={false}/>
           <Toaster />
-          <main className='max-w-8xl mx-auto py-4 px-4'>
+          <main className='max-w-8xl mx-auto py-4 px-4 flex-1 w-full'>
             {children}
-          </main>          
-        </ThemeProvider>        
+          </main>
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -27,7 +27,7 @@ export const ProductShowcase:FC<ProductShowcaseProps> = ({variants}) => {
 		})
 	}, [api])
 	return (
-		<Carousel setApi={setApi} opts={{loop: true}}>
+		<Carousel setApi={setApi} opts={{loop: true}} className='space-y-4'>
 			<CarouselContent>
 				{variants.map((variant) => (variant.productType === selectedType) && variant.variantImages.map((image) => (
 					<CarouselItem key={image.url}>
@@ -44,16 +44,16 @@ export const ProductShowcase:FC<ProductShowcaseProps> = ({variants}) => {
 					</CarouselItem>
 				)))}
 			</CarouselContent>
-			<div className='flex overflow-clip py-2 gap-4'>
+			<div className='flex overflow-clip space-x-2'>
 				{variants.map((variant) => (variant.productType === selectedType) && variant.variantImages.map((image, index) => (
 						<div key={image.url}>
 							{image.url ? (
 								<Image 
 									onClick={() => updatePreview(index)}
 									className={cn(
-										'rounded-md cursor-pointer',
+										'cursor-pointer w-20 h-20 rounded-lg overflow-hidden border-2',
 										'transition-all duration-300 ease-in-out hover:opacity-75',
-										index === activThumbnail[0] ? 'opacity-100' : 'opacity-75',
+										index === activThumbnail[0] ? 'opacity-100 border-primary' : 'opacity-75 border-grey-200',
 									)}
 									priority
 									src={image.url} 

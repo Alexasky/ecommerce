@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { FormSuccess } from '../../formSuccess';
 import { FormError } from '../../formError';
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/shared/components/ui/input-otp';
+import { Eye, EyeOff } from 'lucide-react';
 
 
 
@@ -31,6 +32,7 @@ export const LoginForm = () => {
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState('');
 	const [showTwoFactor, setShowTwoFactor] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);	
 
 	const { execute, status } = useAction(emailSignIn, {
 		onSuccess(data) {
@@ -52,7 +54,7 @@ export const LoginForm = () => {
 		}
 	}, [error]);
 	return (
-		<div className='text-center'>
+		<div className='text-center w-full max-w-md m-auto'>
 			<AuthCard cardTitle={'Welcome Back!'} backButtonHref={'/auth/register'} BackButtonLabel={'Create a new account'} showSocials>
 				<div>
 					<Form {...form}>
@@ -110,7 +112,21 @@ export const LoginForm = () => {
 											<FormItem>
 												<FormLabel>Password</FormLabel>
 												<FormControl>
-													<Input placeholder="*****" {...field} type='password' autoComplete='current-password'/>
+													<div className='relative'>
+														<Input 
+															placeholder="New password" 
+															{...field} 
+															type= {showPassword ? 'text' : 'password'} 
+															autoComplete='current-password'
+														/>
+														<button
+															type="button"
+															onClick={() => setShowPassword(!showPassword)}
+															className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+														>
+															{showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+														</button>
+													</div>
 												</FormControl>
 												<FormDescription/>
 												<FormMessage />

@@ -12,6 +12,7 @@ export const CartMessage = () => {
 
 	return (
 		<motion.div
+		className='mb-3'
 			initial={{ opacity: 0, x: 10 }}
 			animate={{ opacity: 1, x: 0}}
 		>

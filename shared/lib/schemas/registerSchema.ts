@@ -12,6 +12,9 @@ export const RegisterSchema = z.object({
 	name: z.string().min(4, {
 		message: 'Please add a name with at least 4 characters',
 	}),
+	terms: z.boolean().refine((val) => val === true, {
+    message: "You must accept the terms and conditions",
+  }),
 })
 .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords must match",

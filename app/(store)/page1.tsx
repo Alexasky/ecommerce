@@ -2,6 +2,7 @@
 import { ProductList } from '@/entities/products/productsList';
 import { db } from '@/server';
 
+
 export default async function Home() {
   const variants = await db.query.productVariants.findMany({
     with: {

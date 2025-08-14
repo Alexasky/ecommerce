@@ -13,6 +13,7 @@ import { FormSuccess } from '../formSuccess';
 import { FormError } from '../formError';
 import { ResetSchema, ResetFormValues } from '@/shared/lib/schemas';
 import { passwordReset } from '@/server/actions/passwordReset';
+import { BackButton } from '@/shared/components/ui/backButton';
 
 
 
@@ -43,7 +44,8 @@ export const ResetForm = () => {
 		}
 	}, [error]);
 	return (
-		<div className='text-center'>
+		<div className="w-full max-w-md m-auto">
+			<BackButton href={'/'} label={'Back to GoodsMegaGood'} isArrow={true}/>
 			<AuthCard cardTitle={'Forgot your password'} backButtonHref={'/auth/login'} BackButtonLabel={'Back to login'} showSocials>
 				<div>
 					<Form {...form}>
@@ -55,7 +57,7 @@ export const ResetForm = () => {
 									<FormItem>
 										<FormLabel>Email</FormLabel>
 										<FormControl>
-											<Input placeholder='example@example.com' {...field} type='email' autoComplete='email' disabled={status === 'executing'} />
+											<Input placeholder='your@email.com' {...field} type='email' autoComplete='email' disabled={status === 'executing'} />
 										</FormControl>
 										<FormDescription/>
 										<FormMessage />
@@ -66,7 +68,7 @@ export const ResetForm = () => {
 							<FormError message={ error } />
 							<Button className={cn('w-full', status === 'executing' ? 'animate-pulse' : '')}>Reset password</Button>
 						</form>
-					</Form>
+					</Form>					
 				</div>
 			</AuthCard>
 		</div>		

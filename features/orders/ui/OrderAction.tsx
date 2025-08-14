@@ -1,13 +1,14 @@
 'use client';
 import { Button } from '@/shared/components/ui/button';
 import { Card } from '@/shared/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/shared/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/shared/components/ui/dialog';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/components/ui/table';
 import { MoreHorizontal } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { Order } from '../model/types';
+import Link from 'next/link';
 
 export const OrderActions = ({ order }: { order: Order }) => {
 	const [openDialog, setOpenDialog] = useState(false)
@@ -30,6 +31,11 @@ export const OrderActions = ({ order }: { order: Order }) => {
           <DropdownMenuItem onSelect={handleOpenDialog}>
             View Details
           </DropdownMenuItem>
+          {order.receiptURL &&
+            <DropdownMenuItem onSelect={handleOpenDialog}>
+              <Link href={order.receiptURL} target='_blank'>Download Reciept</Link>
+            </DropdownMenuItem>
+          }
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -37,6 +43,7 @@ export const OrderActions = ({ order }: { order: Order }) => {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Order Details #{order.id}</DialogTitle>
+            <DialogDescription>Your order total is ${order.total}</DialogDescription>
           </DialogHeader>
           <Card>
             <Table>

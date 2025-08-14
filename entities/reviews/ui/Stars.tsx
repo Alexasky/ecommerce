@@ -11,15 +11,25 @@ interface StarsProps {
 
 export const Stars:FC<StarsProps> = ({rating, totalReviews, size = 14}) => {
 	return(
-		<div className='flex gap-2 items-center'>
-			<div className='flex'>
-				{[1,2,3,4,5].map((star) => {
+		<div className='flex items-center gap-4'>
+			<div className='flex items-center'>
+				{Array.from({length: 5}).map((_, i) => {
 					return (
-						<Star size={size} key={star} className={cn(rating >= star ? 'fill-primary' : 'fill-transparent')}/>
+						<Star 
+							size={size} 
+							key={i} className={cn(i < Math.floor(rating) ? 'fill-secondary text-secondary' : 'fill-transparent text-gray-300')}/>
 					)
 				})}
 			</div>
-			<span className='text-sm font-bold'>{totalReviews || 0} reviews</span>
+			{totalReviews === 0 
+				? <span className="text-gray-600">No reviews yet</span>
+				: (
+					<>
+						<span className="text-lg font-medium">{rating}</span>
+						<span className="text-gray-600">({totalReviews || 0} reviews)</span>
+					</>
+				)}
+			
 		</div>
 	)
 }

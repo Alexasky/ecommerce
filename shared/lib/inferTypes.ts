@@ -41,3 +41,12 @@ export type ReviewWithUser = InferResultType<"reviews", {
   user: true,
 }>;
 
+export type TotalOrders = InferResultType<"orderProduct", {
+  product: true,
+  order: {with: {user: true}},
+  productVariants: {
+    with: {
+      variantImages: true,
+    }
+  }
+}>;

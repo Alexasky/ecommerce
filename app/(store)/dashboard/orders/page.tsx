@@ -1,5 +1,4 @@
 import { OrderActions } from '@/features/orders/ui/OrderAction';
-import { cn } from '@/lib/utils';
 import { db } from '@/server';
 import { auth } from '@/server/auth';
 import { orders } from '@/server/schema';
@@ -57,7 +56,13 @@ export default async function Orders() {
 								<TableCell>{order.id}</TableCell>
 								<TableCell>$ {order.total}</TableCell>
 								<TableCell>
-									<Badge className={cn(order.status === 'succeeded' ? 'bg-green-700 text-white' : 'bg-card-foreground text-white')}>{order.status}</Badge>						
+									<Badge className={
+										order.status === 'succeeded' 
+											? 'bg-green-700  hover:bg-green-800 text-white' 
+											: 'bg-yellow-700 hover:bg-yellow-800 text-white'
+									}>
+										{order.status}
+									</Badge>						
 								</TableCell>
 								<TableCell className='text-xs font-medium'>{formatDistance(subMinutes(order.created!, 0), new Date(), {addSuffix: true})}</TableCell>
 								<TableCell>

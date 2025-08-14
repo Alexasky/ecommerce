@@ -8,6 +8,7 @@ import { CartItems } from './CartItems';
 import { CartMessage } from './CartMessage';
 import { Payment } from './Payment';
 import { OrderConfirmed } from './OrderConfirmed';
+import { CartProgress } from './CartProgress';
 
 export const CartDrawer = () => {
 	const { cart, checkoutProgress, cartOpened, setCartOpened } = useCartStore();
@@ -20,18 +21,19 @@ export const CartDrawer = () => {
 								animate={{scale: 1, opacity: 1}} 
 								initial={{scale: 0, opacity: 0}} 
 								exit={{scale: 0}}
-								className='absolute flex justify-center items-center w-5 h-5 bg-primary dark:bg-primary text-[10px] fo font-bold rounded-full -top-1 -right-0.5 text-white'
+								className='absolute flex justify-center items-center w-5 h-5 bg-secondary dark:bg-primary text-[10px] fo font-bold rounded-full -top-1 -right-0.5 text-white'
 							>
-								{cart.length}
+								{cart.length > 99 ? "99+" : cart.length}
 							</motion.span>
 						)}
 					</AnimatePresence>
-				<ShoppingBag />
+					<ShoppingBag />
 				</DrawerTrigger>
 				<DrawerContent className='min-h-70vh p-1 md:p-4'>
 					<DrawerHeader>
 						<CartMessage />									
 					</DrawerHeader>
+					<CartProgress/>
 					<div className='overflow-auto p-1 md:p-4'>
 						{checkoutProgress === 'cart-page' && <CartItems/>}
 						{checkoutProgress === 'payment-page' && <Payment />}

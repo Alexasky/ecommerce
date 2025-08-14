@@ -3,7 +3,7 @@ import { signOut } from 'next-auth/react';
 import { Session } from 'next-auth';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/shared/components/ui/avatar';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import { LogOutIcon, MoonIcon, SettingsIcon, SunIcon, TruckIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
@@ -21,27 +21,19 @@ export const UserButton = ({user}: Session) => {
 		return (
 			<DropdownMenu modal={false}>
 				<DropdownMenuTrigger>
-					<Suspense fallback={
-						<AvatarFallback className='bg-primary/25 cursor-pointer'>
-							<div className='font-bold'>
-								{ user.name?.charAt(0).toUpperCase() }
-							</div>
-						</AvatarFallback>
-					}>
-						<Avatar >
+						<Avatar>
 							{user.image && user.name ? (
 								<AvatarImage src={user.image} alt={user.name} className='bg-primary/25 cursor-pointer object-cover h-full w-full'/>
 							) : (
-								<AvatarFallback className='bg-primary/25 cursor-pointer object-cover h-full w-full'>
+								<AvatarFallback className='bg-primary/25 text-white cursor-pointer object-cover h-full w-full'>
 									<div className="font-bold">
 										{user.name?.charAt(0).toUpperCase()}
 									</div>
 								</AvatarFallback>
 							)}
 						</Avatar>
-					</Suspense>					
 				</DropdownMenuTrigger>
-				<DropdownMenuContent className='py-4 px-4' align='end'>
+				<DropdownMenuContent className='py-4 px-4 bg-card' align='end'>
 					<DropdownMenuLabel>
 						<div className='flex justify-center items-center flex-col px-4 py-4 bg-primary/10 rounded-lg'>
 							{user.image && user.name && 
